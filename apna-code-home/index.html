@@ -1,1 +1,947 @@
-<p>hello world</p>
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PULSE • Live Fitness</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap');
+        
+        :root {
+            --neon-green: #22ff88;
+            --neon-blue: #00f0ff;
+            --neon-orange: #ff6600;
+        }
+        
+        .tail-container {
+            font-family: 'Inter', system_ui, sans-serif;
+        }
+        
+        .logo-font {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        .hero-bg {
+            background: linear-gradient(45deg, #0a0a0a, #1a1a2e);
+        }
+
+        .neon-text {
+            text-shadow: 0 0 20px var(--neon-green);
+        }
+
+        .card-hover {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 
+                       0 8px 10px -6px rgb(0 0 0 / 0.1);
+        }
+
+        .nav-link {
+            position: relative;
+        }
+        
+        .nav-link:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: #22ff88;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link:hover:after {
+            width: 100%;
+        }
+
+        .progress-circle {
+            background: conic-gradient(#22ff88 0deg 280deg, #27272a 280deg 360deg);
+        }
+
+        .streak-flame {
+            animation: flame 1.5s infinite alternate;
+        }
+
+        @keyframes flame {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.15); }
+        }
+
+        .slide-in {
+            animation: slideIn 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .slide-out {
+            animation: slideOut 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        @keyframes slideOut {
+            to {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .stagger-item {
+            opacity: 0;
+            animation: fadeIn 0.4s ease-out forwards;
+        }
+
+        .stagger-item:nth-child(1) { animation-delay: 0.05s; }
+        .stagger-item:nth-child(2) { animation-delay: 0.1s; }
+        .stagger-item:nth-child(3) { animation-delay: 0.15s; }
+        .stagger-item:nth-child(4) { animation-delay: 0.2s; }
+        .stagger-item:nth-child(5) { animation-delay: 0.25s; }
+    </style>
+</head>
+<body class="tail-container bg-zinc-950 text-zinc-100">
+    <!-- NAVBAR -->
+    <nav class="bg-black border-b border-zinc-800 fixed w-full z-50">
+        <div class="max-w-screen-2xl mx-auto">
+            <div class="px-8 py-5 flex items-center justify-between">
+                <!-- Logo -->
+                <div class="flex items-center gap-x-3">
+                    <div class="w-9 h-9 bg-gradient-to-br from-emerald-400 to-cyan-400 rounded-2xl flex items-center justify-center">
+                        <i class="fa-solid fa-bolt text-black text-2xl"></i>
+                    </div>
+                    <div>
+                        <span class="logo-font text-3xl font-bold tracking-tighter text-white">PULSE</span>
+                    </div>
+                </div>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center gap-x-8 text-sm font-medium">
+                    <a href="#" onclick="switchTab(0)" class="nav-link text-white">Dashboard</a>
+                    <a href="#" onclick="switchTab(1)" class="nav-link text-zinc-400 hover:text-white">Workouts</a>
+                    <a href="#" onclick="switchTab(2)" class="nav-link text-zinc-400 hover:text-white">Habits</a>
+                    <a href="#" onclick="switchTab(3)" class="nav-link text-zinc-400 hover:text-white">Progress</a>
+                    <a href="#" onclick="switchTab(4)" class="nav-link text-zinc-400 hover:text-white">Goals</a>
+                </div>
+
+                <div class="flex items-center gap-x-4">
+                    <div class="hidden sm:flex items-center bg-zinc-900 rounded-3xl px-4 py-2 text-sm border border-zinc-700">
+                        <div class="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div>
+                        <span class="ml-2 text-emerald-400 font-medium">Live • 1423 training</span>
+                    </div>
+                    
+                    <button onclick="toggleLoginModal()" 
+                            class="px-6 py-3 text-sm font-semibold rounded-3xl border border-zinc-700 hover:border-white transition-colors">
+                        Log in
+                    </button>
+                    <button onclick="toggleLoginModal()" 
+                            class="px-6 py-3 text-sm font-semibold bg-white text-black rounded-3xl hover:bg-emerald-400 hover:text-black transition-all">
+                        Start Free
+                    </button>
+
+                    <!-- Mobile menu -->
+                    <button class="md:hidden text-2xl">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="pt-24 pb-12">
+        <!-- HERO -->
+        <div class="hero-bg py-20 px-6 md:px-12">
+            <div class="max-w-screen-2xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+                <div class="space-y-8">
+                    <div class="inline-flex items-center gap-x-2 bg-zinc-900 border border-emerald-500 text-emerald-400 text-sm px-5 py-2 rounded-3xl">
+                        <i class="fa-solid fa-fire streak-flame"></i>
+                        <span>14 day streak 🔥</span>
+                    </div>
+                    
+                    <h1 class="text-6xl md:text-7xl font-bold leading-none tracking-tighter">
+                        TRACK.<br>TRAIN.<br><span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-cyan-400 to-orange-400 neon-text">DOMINATE.</span>
+                    </h1>
+                    
+                    <p class="text-xl text-zinc-400 max-w-md">
+                        Real-time habit &amp; workout tracking for athletes and gym warriors. 
+                        Built for those who refuse to stay average.
+                    </p>
+                    
+                    <div class="flex items-center gap-4">
+                        <button onclick="document.getElementById('demo-section').scrollIntoView({ behavior: 'smooth' })" 
+                                class="px-10 py-5 bg-white hover:bg-emerald-400 text-black font-semibold text-lg rounded-3xl flex items-center gap-x-3 transition-all active:scale-95">
+                            <span>Enter the Arena</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                        
+                        <button class="px-8 py-5 border border-zinc-600 hover:border-white rounded-3xl font-medium flex items-center gap-x-2 transition-all">
+                            <i class="fa-solid fa-play"></i>
+                            <span>Watch 1:42</span>
+                        </button>
+                    </div>
+                    
+                    <div class="flex items-center gap-x-8 text-sm">
+                        <div class="flex -space-x-4">
+                            <div class="w-8 h-8 bg-zinc-700 border-2 border-zinc-900 rounded-2xl overflow-hidden">
+                                <img src="https://picsum.photos/id/64/128/128" class="object-cover">
+                            </div>
+                            <div class="w-8 h-8 bg-zinc-700 border-2 border-zinc-900 rounded-2xl overflow-hidden">
+                                <img src="https://picsum.photos/id/201/128/128" class="object-cover">
+                            </div>
+                            <div class="w-8 h-8 bg-zinc-700 border-2 border-zinc-900 rounded-2xl overflow-hidden">
+                                <img src="https://picsum.photos/id/201/128/128" class="object-cover">
+                            </div>
+                        </div>
+                        <div>
+                            <div class="text-emerald-400 font-semibold">Joined by 87,459 athletes</div>
+                            <div class="text-zinc-500 text-xs">this month</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Hero Visual -->
+                <div class="relative hidden md:block">
+                    <div class="bg-zinc-900 rounded-[3rem] p-3 shadow-2xl border border-zinc-700">
+                        <img src="https://picsum.photos/id/1015/800/620" 
+                             class="rounded-3xl shadow-inner" alt="Fitness dashboard">
+                        <div class="absolute -top-6 -right-6 bg-black border border-emerald-500 rounded-3xl p-5 w-52">
+                            <div class="flex justify-between items-center mb-4">
+                                <div class="text-sm">Today's Burn</div>
+                                <div class="text-emerald-400 font-bold text-xl">842 <span class="text-sm font-normal">kcal</span></div>
+                            </div>
+                            <div class="h-2 bg-zinc-800 rounded-full overflow-hidden">
+                                <div class="h-full w-[73%] bg-gradient-to-r from-emerald-400 to-cyan-400"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- STATS BAR -->
+        <div class="max-w-screen-2xl mx-auto px-8 py-6 grid grid-cols-3 md:grid-cols-6 gap-6 text-center border-b border-zinc-800">
+            <div>
+                <div class="text-3xl font-bold text-emerald-400">47</div>
+                <div class="text-xs uppercase tracking-widest text-zinc-500">Workouts logged</div>
+            </div>
+            <div>
+                <div class="text-3xl font-bold text-cyan-400">21</div>
+                <div class="text-xs uppercase tracking-widest text-zinc-500">Day streak</div>
+            </div>
+            <div>
+                <div class="text-3xl font-bold text-orange-400">183k</div>
+                <div class="text-xs uppercase tracking-widest text-zinc-500">KG lifted</div>
+            </div>
+            <div>
+                <div class="text-3xl font-bold">92%</div>
+                <div class="text-xs uppercase tracking-widest text-zinc-500">Goal completion</div>
+            </div>
+            <div>
+                <div class="text-3xl font-bold text-white">4.9</div>
+                <div class="text-xs uppercase tracking-widest text-zinc-500">Avg rating</div>
+            </div>
+            <div class="col-span-3 md:col-span-1 flex items-center justify-center gap-x-2 text-emerald-400">
+                <i class="fa-solid fa-users"></i>
+                <span class="font-medium">Live community</span>
+            </div>
+        </div>
+
+        <!-- DEMO DASHBOARD -->
+        <div id="demo-section" class="max-w-screen-2xl mx-auto px-6 md:px-12 py-16">
+            <div class="flex items-end justify-between mb-10">
+                <div>
+                    <span class="px-4 py-1.5 bg-emerald-900 text-emerald-400 text-xs font-mono rounded-3xl">DEMO ACCOUNT</span>
+                    <h2 class="text-4xl font-semibold mt-3">Welcome back, Alex</h2>
+                </div>
+                <div class="flex items-center gap-x-3 text-sm">
+                    <div onclick="switchTab(0)" class="tab-btn active px-6 py-3 rounded-3xl cursor-pointer">Dashboard</div>
+                    <div onclick="openWorkoutsPage()" class="tab-btn px-6 py-3 rounded-3xl cursor-pointer hover:bg-zinc-800">Workouts</div>
+                    <div onclick="openHabitsPage()" class="tab-btn px-6 py-3 rounded-3xl cursor-pointer hover:bg-zinc-800">Habits</div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                <!-- LEFT COLUMN -->
+                <div class="lg:col-span-8 space-y-8">
+                    <!-- Progress Overview -->
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                        <div class="bg-zinc-900 rounded-3xl p-7 card-hover">
+                            <div class="flex justify-between">
+                                <div>
+                                    <div class="text-emerald-400 text-sm font-medium">THIS WEEK</div>
+                                    <div class="text-5xl font-bold mt-1">4,821</div>
+                                    <div class="text-zinc-400">kcal burned</div>
+                                </div>
+                                <div class="w-20 h-20 rounded-2xl progress-circle flex items-center justify-center text-center">
+                                    <div class="text-center">
+                                        <div class="text-xs">73%</div>
+                                        <div class="text-[10px] text-zinc-400">of goal</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-zinc-900 rounded-3xl p-7 card-hover flex flex-col">
+                            <div class="flex-1">
+                                <div class="flex items-center gap-x-3">
+                                    <i class="fa-solid fa-fire text-orange-400 text-3xl streak-flame"></i>
+                                    <div>
+                                        <div class="text-4xl font-bold">21</div>
+                                        <div class="text-xs text-orange-400">DAY STREAK</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-xs text-zinc-500">Personal best 🔥</div>
+                        </div>
+                        
+                        <div class="bg-zinc-900 rounded-3xl p-7 card-hover">
+                            <div class="text-sm font-medium mb-6">Body Stats</div>
+                            <div class="flex justify-between">
+                                <div>
+                                    <div class="text-3xl font-semibold">81.4</div>
+                                    <div class="text-xs text-zinc-400">KG</div>
+                                </div>
+                                <div>
+                                    <div class="text-3xl font-semibold text-emerald-400">12%</div>
+                                    <div class="text-xs text-zinc-400">Body Fat</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Today's Workout -->
+                    <div class="bg-zinc-900 rounded-3xl p-8 card-hover">
+                        <div class="flex items-center justify-between mb-6">
+                            <div class="font-semibold text-lg">Today's Training</div>
+                            <button onclick="completeWorkout()" 
+                                    class="text-xs bg-emerald-500 hover:bg-emerald-400 text-black px-6 py-3 rounded-2xl font-semibold">
+                                MARK COMPLETE
+                            </button>
+                        </div>
+                        
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                            <div class="bg-black/50 rounded-2xl p-5">
+                                <div class="text-cyan-400 text-xs">BENCH PRESS</div>
+                                <div class="font-mono text-3xl mt-1">4×8</div>
+                                <div class="text-xs text-zinc-400">85kg</div>
+                            </div>
+                            <div class="bg-black/50 rounded-2xl p-5">
+                                <div class="text-cyan-400 text-xs">DEADLIFT</div>
+                                <div class="font-mono text-3xl mt-1">3×6</div>
+                                <div class="text-xs text-zinc-400">140kg</div>
+                            </div>
+                            <div class="bg-black/50 rounded-2xl p-5">
+                                <div class="text-cyan-400 text-xs">PULL-UPS</div>
+                                <div class="font-mono text-3xl mt-1">4×AMRAP</div>
+                            </div>
+                            <div class="bg-black/50 rounded-2xl p-5 opacity-60">
+                                <div class="text-cyan-400 text-xs">FINISHER</div>
+                                <div class="text-zinc-400 text-sm mt-6">15 min EMOM</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- RIGHT COLUMN -->
+                <div class="lg:col-span-4 space-y-8">
+                    <!-- Habit Tracker -->
+                    <div class="bg-zinc-900 rounded-3xl p-8 card-hover">
+                        <div class="flex items-center justify-between mb-6">
+                            <div class="font-semibold">Daily Habits</div>
+                            <span class="text-xs bg-zinc-800 px-3 py-1 rounded-3xl">5/7</span>
+                        </div>
+                        
+                        <div class="space-y-5">
+                            <div class="flex items-center gap-4">
+                                <input type="checkbox" checked class="w-6 h-6 accent-emerald-400">
+                                <div class="flex-1">
+                                    <div class="text-sm">Protein goal (180g)</div>
+                                </div>
+                                <div class="text-emerald-400 font-medium">✓</div>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <input type="checkbox" checked class="w-6 h-6 accent-emerald-400">
+                                <div class="flex-1">
+                                    <div class="text-sm">8k steps</div>
+                                </div>
+                                <div class="text-emerald-400 font-medium">✓</div>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <input type="checkbox" class="w-6 h-6 accent-emerald-400">
+                                <div class="flex-1">
+                                    <div class="text-sm">Sleep 8hrs</div>
+                                </div>
+                                <div class="text-amber-400 font-medium">4hrs left</div>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <input type="checkbox" checked class="w-6 h-6 accent-emerald-400">
+                                <div class="flex-1">
+                                    <div class="text-sm">No junk food</div>
+                                </div>
+                                <div class="text-emerald-400 font-medium">✓</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Goals -->
+                    <div class="bg-gradient-to-br from-zinc-900 to-black border border-zinc-700 rounded-3xl p-8 card-hover">
+                        <div class="flex justify-between text-sm mb-6">
+                            <div class="font-medium">Active Goals</div>
+                            <i class="fa-solid fa-plus text-emerald-400"></i>
+                        </div>
+                        <div class="space-y-6">
+                            <div>
+                                <div class="flex justify-between text-xs mb-2">
+                                    <span>Deadlift 150kg</span>
+                                    <span class="text-emerald-400">132kg</span>
+                                </div>
+                                <div class="h-1.5 bg-zinc-800 rounded-full">
+                                    <div class="h-1.5 w-4/5 bg-orange-400 rounded-full"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-xs mb-2">
+                                    <span>Sub 8% body fat</span>
+                                    <span class="text-emerald-400">12%</span>
+                                </div>
+                                <div class="h-1.5 bg-zinc-800 rounded-full">
+                                    <div class="h-1.5 w-1/3 bg-cyan-400 rounded-full"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- FEATURES -->
+        <div class="max-w-screen-2xl mx-auto px-6 py-20 bg-black">
+            <div class="text-center mb-16">
+                <h2 class="text-5xl font-bold">Built for real progress</h2>
+                <p class="text-zinc-400 mt-4">Everything you need. Nothing you don't.</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                <div class="bg-zinc-900 p-10 rounded-3xl card-hover">
+                    <i class="fa-solid fa-chart-line text-5xl text-emerald-400 mb-6"></i>
+                    <h3 class="text-2xl font-semibold mb-3">Live Progress</h3>
+                    <p class="text-zinc-400">Real-time charts, volume tracking, and body composition analytics.</p>
+                </div>
+                <div class="bg-zinc-900 p-10 rounded-3xl card-hover">
+                    <i class="fa-solid fa-list-check text-5xl text-cyan-400 mb-6"></i>
+                    <h3 class="text-2xl font-semibold mb-3">Smart Habit Tracker</h3>
+                    <p class="text-zinc-400">Build unbreakable routines with streaks, reminders &amp; accountability.</p>
+                </div>
+                <div class="bg-zinc-900 p-10 rounded-3xl card-hover">
+                    <i class="fa-solid fa-dumbbell text-5xl text-orange-400 mb-6"></i>
+                    <h3 class="text-2xl font-semibold mb-3">Workout Logger</h3>
+                    <p class="text-zinc-400">1RM calculator, exercise library, rest timer, and superset builder.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="bg-black border-t border-zinc-900 py-16">
+        <div class="max-w-screen-2xl mx-auto px-8 text-zinc-400 text-sm">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-8">
+                <div class="flex items-center gap-x-3">
+                    <div class="w-8 h-8 bg-gradient-to-br from-emerald-400 to-cyan-400 rounded-2xl flex items-center justify-center">
+                        <i class="fa-solid fa-bolt text-black"></i>
+                    </div>
+                    <span class="logo-font text-3xl font-bold text-white">PULSE</span>
+                </div>
+                
+                <div class="flex gap-x-8">
+                    <a href="#" class="hover:text-white">Features</a>
+                    <a href="#" class="hover:text-white">Pricing</a>
+                    <a href="#" class="hover:text-white">Community</a>
+                    <a href="#" class="hover:text-white">Blog</a>
+                </div>
+                
+                <div class="text-xs">
+                    © 2026 Pulse Fitness. Made for the dedicated.
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- LOGIN MODAL -->
+    <div id="loginModal" class="hidden fixed inset-0 bg-black/80 backdrop-blur-xl z-[100] flex items-center justify-center">
+        <div class="bg-zinc-900 max-w-md w-full mx-4 rounded-3xl p-10">
+            <div class="flex justify-between items-center mb-8">
+                <div class="logo-font text-4xl">PULSE</div>
+                <button onclick="toggleLoginModal()" class="text-3xl text-zinc-400 hover:text-white">×</button>
+            </div>
+            
+            <h2 class="text-3xl font-semibold mb-2">Welcome back</h2>
+            <p class="text-zinc-400 mb-8">Sign in to continue your journey</p>
+            
+            <div class="space-y-6">
+                <input type="text" placeholder="Email or username" 
+                       class="w-full bg-zinc-800 border border-zinc-700 focus:border-emerald-400 rounded-3xl px-7 py-6 outline-none">
+                
+                <input type="password" placeholder="Password" 
+                       class="w-full bg-zinc-800 border border-zinc-700 focus:border-emerald-400 rounded-3xl px-7 py-6 outline-none">
+                
+                <button onclick="fakeLogin()" 
+                        class="w-full py-7 bg-white text-black font-semibold rounded-3xl hover:bg-emerald-400 transition-colors">
+                    SIGN IN
+                </button>
+                
+                <div class="text-center text-xs text-zinc-500">
+                    Don't have an account? <span onclick="fakeLogin()" class="text-emerald-400 cursor-pointer">Create one free →</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- WORKOUTS PAGE MODAL -->
+    <div id="workoutsPageModal" class="hidden fixed inset-0 bg-black z-[90] overflow-y-auto">
+        <nav class="bg-black border-b border-zinc-800 fixed w-full z-50">
+            <div class="max-w-screen-2xl mx-auto px-8 py-5 flex items-center justify-between">
+                <div class="flex items-center gap-x-3">
+                    <button onclick="closeWorkoutsPage()" class="text-2xl text-zinc-400 hover:text-white">←</button>
+                    <span class="logo-font text-2xl font-bold text-white">Workouts Program</span>
+                </div>
+                <button onclick="openAddWorkoutModal()" class="px-6 py-3 text-sm font-semibold bg-emerald-500 hover:bg-emerald-400 text-black rounded-3xl">
+                    + ADD WORKOUT
+                </button>
+            </div>
+        </nav>
+
+        <div class="pt-24 pb-12 max-w-screen-2xl mx-auto px-6 md:px-12">
+            <div class="mb-10">
+                <h2 class="text-4xl font-semibold mb-3">Your Training Programs</h2>
+                <p class="text-zinc-400">Manage and track all your workout programs</p>
+            </div>
+
+            <div id="workoutsList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Workouts will be added here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- HABITS PAGE MODAL -->
+    <div id="habitsPageModal" class="hidden fixed inset-0 bg-black z-[90] overflow-y-auto">
+        <nav class="bg-black border-b border-zinc-800 fixed w-full z-50">
+            <div class="max-w-screen-2xl mx-auto px-8 py-5 flex items-center justify-between">
+                <div class="flex items-center gap-x-3">
+                    <button onclick="closeHabitsPage()" class="text-2xl text-zinc-400 hover:text-white">←</button>
+                    <span class="logo-font text-2xl font-bold text-white">Daily Habits</span>
+                </div>
+                <button onclick="openAddHabitModal()" class="px-6 py-3 text-sm font-semibold bg-cyan-500 hover:bg-cyan-400 text-black rounded-3xl">
+                    + ADD HABIT
+                </button>
+            </div>
+        </nav>
+
+        <div class="pt-24 pb-12 max-w-screen-2xl mx-auto px-6 md:px-12">
+            <div class="mb-10">
+                <h2 class="text-4xl font-semibold mb-3">Your Daily Habits</h2>
+                <p class="text-zinc-400">Build unbreakable routines and track your progress</p>
+            </div>
+
+            <div id="habitsList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Habits will be added here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- ADD WORKOUT MODAL -->
+    <div id="addWorkoutModal" class="hidden fixed inset-0 bg-black/80 backdrop-blur-xl z-[110] flex items-center justify-center p-4">
+        <div class="bg-zinc-900 max-w-2xl w-full rounded-3xl p-10 slide-in">
+            <div class="flex justify-between items-center mb-8">
+                <h2 class="text-3xl font-semibold">Create New Workout</h2>
+                <button onclick="closeAddWorkoutModal()" class="text-3xl text-zinc-400 hover:text-white">×</button>
+            </div>
+            
+            <div class="space-y-6">
+                <div>
+                    <label class="block text-sm font-medium mb-2 text-zinc-300">Workout Name</label>
+                    <input type="text" id="workoutName" placeholder="e.g., Upper Body Push" 
+                           class="w-full bg-zinc-800 border border-zinc-700 focus:border-emerald-400 rounded-3xl px-6 py-3 outline-none">
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium mb-2 text-zinc-300">Exercise Type</label>
+                    <select id="exerciseType" class="w-full bg-zinc-800 border border-zinc-700 focus:border-emerald-400 rounded-3xl px-6 py-3 outline-none">
+                        <option value="">Select Type</option>
+                        <option value="Strength">Strength</option>
+                        <option value="Cardio">Cardio</option>
+                        <option value="Flexibility">Flexibility</option>
+                        <option value="HIIT">HIIT</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium mb-2 text-zinc-300">Exercises</label>
+                    <input type="text" id="exercises" placeholder="e.g., Bench Press 4x8, Squats 3x10" 
+                           class="w-full bg-zinc-800 border border-zinc-700 focus:border-emerald-400 rounded-3xl px-6 py-3 outline-none">
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium mb-2 text-zinc-300">Duration (minutes)</label>
+                    <input type="number" id="duration" placeholder="45" 
+                           class="w-full bg-zinc-800 border border-zinc-700 focus:border-emerald-400 rounded-3xl px-6 py-3 outline-none">
+                </div>
+
+                <div class="flex gap-4 pt-4">
+                    <button onclick="closeAddWorkoutModal()" 
+                            class="flex-1 py-3 border border-zinc-700 hover:border-white text-white rounded-3xl font-semibold transition-colors">
+                        Cancel
+                    </button>
+                    <button onclick="addNewWorkout()" 
+                            class="flex-1 py-3 bg-emerald-500 hover:bg-emerald-400 text-black rounded-3xl font-semibold transition-colors">
+                        Create Workout
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ADD HABIT MODAL -->
+    <div id="addHabitModal" class="hidden fixed inset-0 bg-black/80 backdrop-blur-xl z-[110] flex items-center justify-center p-4">
+        <div class="bg-zinc-900 max-w-2xl w-full rounded-3xl p-10 slide-in">
+            <div class="flex justify-between items-center mb-8">
+                <h2 class="text-3xl font-semibold">Create New Habit</h2>
+                <button onclick="closeAddHabitModal()" class="text-3xl text-zinc-400 hover:text-white">×</button>
+            </div>
+            
+            <div class="space-y-6">
+                <div>
+                    <label class="block text-sm font-medium mb-2 text-zinc-300">Habit Name</label>
+                    <input type="text" id="habitName" placeholder="e.g., Morning Meditation" 
+                           class="w-full bg-zinc-800 border border-zinc-700 focus:border-cyan-400 rounded-3xl px-6 py-3 outline-none">
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium mb-2 text-zinc-300">Category</label>
+                    <select id="habitCategory" class="w-full bg-zinc-800 border border-zinc-700 focus:border-cyan-400 rounded-3xl px-6 py-3 outline-none">
+                        <option value="">Select Category</option>
+                        <option value="Health">Health</option>
+                        <option value="Fitness">Fitness</option>
+                        <option value="Nutrition">Nutrition</option>
+                        <option value="Mindfulness">Mindfulness</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium mb-2 text-zinc-300">Frequency</label>
+                    <select id="habitFrequency" class="w-full bg-zinc-800 border border-zinc-700 focus:border-cyan-400 rounded-3xl px-6 py-3 outline-none">
+                        <option value="Daily">Daily</option>
+                        <option value="Weekly">Weekly (3x)</option>
+                        <option value="Custom">Custom</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium mb-2 text-zinc-300">Goal/Target</label>
+                    <input type="text" id="habitGoal" placeholder="e.g., 8000 steps, 2L water" 
+                           class="w-full bg-zinc-800 border border-zinc-700 focus:border-cyan-400 rounded-3xl px-6 py-3 outline-none">
+                </div>
+
+                <div class="flex gap-4 pt-4">
+                    <button onclick="closeAddHabitModal()" 
+                            class="flex-1 py-3 border border-zinc-700 hover:border-white text-white rounded-3xl font-semibold transition-colors">
+                        Cancel
+                    </button>
+                    <button onclick="addNewHabit()" 
+                            class="flex-1 py-3 bg-cyan-500 hover:bg-cyan-400 text-black rounded-3xl font-semibold transition-colors">
+                        Create Habit
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Tailwind script already loaded via CDN
+        
+        // Storage for workouts and habits
+        let workouts = [
+            { id: 1, name: "Upper Body Push", type: "Strength", exercises: "Bench Press 4x8, Overhead Press 3x6", duration: 50 },
+            { id: 2, name: "Lower Body", type: "Strength", exercises: "Squats 4x8, Deadlift 3x6", duration: 60 }
+        ];
+
+        let habits = [
+            { id: 1, name: "Protein Goal (180g)", category: "Nutrition", frequency: "Daily", goal: "180g", streak: 21 },
+            { id: 2, name: "8k Steps", category: "Fitness", frequency: "Daily", goal: "8000 steps", streak: 18 }
+        ];
+
+        function switchTab(n) {
+            const tabs = document.querySelectorAll('.tab-btn');
+            tabs.forEach((tab, i) => {
+                if (i === n) {
+                    tab.classList.add('active', 'bg-zinc-800', 'text-white');
+                } else {
+                    tab.classList.remove('active', 'bg-zinc-800', 'text-white');
+                }
+            });
+        }
+        
+        function toggleLoginModal() {
+            const modal = document.getElementById('loginModal');
+            modal.classList.toggle('hidden');
+        }
+        
+        function fakeLogin() {
+            alert("🎉 Welcome to PULSE! (This is a static demo)");
+            toggleLoginModal();
+        }
+        
+        function completeWorkout() {
+            const notif = document.createElement('div');
+            notif.className = 'fixed bottom-8 right-8 bg-emerald-600 text-white px-8 py-6 rounded-3xl shadow-2xl flex items-center gap-x-3 z-[200]';
+            notif.innerHTML = `
+                <i class="fa-solid fa-check-circle text-2xl"></i>
+                <div>
+                    <div class="font-semibold">Workout logged!</div>
+                    <div class="text-xs opacity-75">+420 XP • New PR on bench</div>
+                </div>
+            `;
+            document.body.appendChild(notif);
+            
+            setTimeout(() => {
+                notif.style.transition = 'all 0.4s';
+                notif.style.opacity = '0';
+                notif.style.transform = 'translateY(20px)';
+                setTimeout(() => notif.remove(), 400);
+            }, 2800);
+        }
+
+        // WORKOUTS PAGE FUNCTIONS
+        function openWorkoutsPage() {
+            const modal = document.getElementById('workoutsPageModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('fade-in');
+            renderWorkoutsList();
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeWorkoutsPage() {
+            const modal = document.getElementById('workoutsPageModal');
+            modal.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        function renderWorkoutsList() {
+            const list = document.getElementById('workoutsList');
+            list.innerHTML = workouts.map((workout, index) => `
+                <div class="bg-zinc-900 rounded-3xl p-8 card-hover stagger-item border border-zinc-800 hover:border-emerald-500">
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <h3 class="text-2xl font-semibold">${workout.name}</h3>
+                            <span class="text-xs bg-emerald-900 text-emerald-400 px-3 py-1 rounded-full mt-2 inline-block">${workout.type}</span>
+                        </div>
+                        <button onclick="deleteWorkout(${index})" class="text-zinc-500 hover:text-red-400 text-xl">×</button>
+                    </div>
+                    <p class="text-zinc-400 text-sm mb-4">${workout.exercises}</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-zinc-500 text-sm">⏱️ ${workout.duration} mins</span>
+                        <button onclick="startWorkout(${index})" class="px-4 py-2 bg-emerald-500 hover:bg-emerald-400 text-black text-sm font-semibold rounded-2xl">
+                            Start
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function startWorkout(index) {
+            const workout = workouts[index];
+            alert(`🏋️ Starting: ${workout.name}\n\n${workout.exercises}\n\nKeep crushing it! 💪`);
+            completeWorkout();
+        }
+
+        function deleteWorkout(index) {
+            if (confirm('Delete this workout?')) {
+                workouts.splice(index, 1);
+                renderWorkoutsList();
+                showNotification('Workout deleted', 'warning');
+            }
+        }
+
+        function openAddWorkoutModal() {
+            document.getElementById('addWorkoutModal').classList.remove('hidden');
+        }
+
+        function closeAddWorkoutModal() {
+            document.getElementById('addWorkoutModal').classList.add('hidden');
+            document.getElementById('workoutName').value = '';
+            document.getElementById('exerciseType').value = '';
+            document.getElementById('exercises').value = '';
+            document.getElementById('duration').value = '';
+        }
+
+        function addNewWorkout() {
+            const name = document.getElementById('workoutName').value.trim();
+            const type = document.getElementById('exerciseType').value;
+            const exercises = document.getElementById('exercises').value.trim();
+            const duration = document.getElementById('duration').value;
+
+            if (!name || !type || !exercises || !duration) {
+                alert('Please fill in all fields!');
+                return;
+            }
+
+            const newWorkout = {
+                id: workouts.length + 1,
+                name,
+                type,
+                exercises,
+                duration: parseInt(duration)
+            };
+
+            workouts.push(newWorkout);
+            showNotification(`✨ Added new workout: ${name}`, 'success');
+            closeAddWorkoutModal();
+            renderWorkoutsList();
+        }
+
+        // HABITS PAGE FUNCTIONS
+        function openHabitsPage() {
+            const modal = document.getElementById('habitsPageModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('fade-in');
+            renderHabitsList();
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeHabitsPage() {
+            const modal = document.getElementById('habitsPageModal');
+            modal.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        function renderHabitsList() {
+            const list = document.getElementById('habitsList');
+            list.innerHTML = habits.map((habit, index) => `
+                <div class="bg-zinc-900 rounded-3xl p-8 card-hover stagger-item border border-zinc-800 hover:border-cyan-500">
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <h3 class="text-2xl font-semibold">${habit.name}</h3>
+                            <div class="flex gap-2 mt-2">
+                                <span class="text-xs bg-cyan-900 text-cyan-400 px-3 py-1 rounded-full">${habit.category}</span>
+                                <span class="text-xs bg-amber-900 text-amber-400 px-3 py-1 rounded-full">${habit.frequency}</span>
+                            </div>
+                        </div>
+                        <button onclick="deleteHabit(${index})" class="text-zinc-500 hover:text-red-400 text-xl">×</button>
+                    </div>
+                    <p class="text-zinc-400 text-sm mb-6">Goal: ${habit.goal}</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-emerald-400 text-sm font-semibold">🔥 ${habit.streak} day streak</span>
+                        <button onclick="completeHabit(${index})" class="px-4 py-2 bg-cyan-500 hover:bg-cyan-400 text-black text-sm font-semibold rounded-2xl">
+                            ✓ Complete
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function completeHabit(index) {
+            habits[index].streak++;
+            showNotification(`🎉 Habit completed! Streak: ${habits[index].streak}`, 'success');
+            renderHabitsList();
+        }
+
+        function deleteHabit(index) {
+            if (confirm('Delete this habit?')) {
+                habits.splice(index, 1);
+                renderHabitsList();
+                showNotification('Habit deleted', 'warning');
+            }
+        }
+
+        function openAddHabitModal() {
+            document.getElementById('addHabitModal').classList.remove('hidden');
+        }
+
+        function closeAddHabitModal() {
+            document.getElementById('addHabitModal').classList.add('hidden');
+            document.getElementById('habitName').value = '';
+            document.getElementById('habitCategory').value = '';
+            document.getElementById('habitFrequency').value = 'Daily';
+            document.getElementById('habitGoal').value = '';
+        }
+
+        function addNewHabit() {
+            const name = document.getElementById('habitName').value.trim();
+            const category = document.getElementById('habitCategory').value;
+            const frequency = document.getElementById('habitFrequency').value;
+            const goal = document.getElementById('habitGoal').value.trim();
+
+            if (!name || !category || !frequency || !goal) {
+                alert('Please fill in all fields!');
+                return;
+            }
+
+            const newHabit = {
+                id: habits.length + 1,
+                name,
+                category,
+                frequency,
+                goal,
+                streak: 0
+            };
+
+            habits.push(newHabit);
+            showNotification(`✨ New habit created: ${name}`, 'success');
+            closeAddHabitModal();
+            renderHabitsList();
+        }
+
+        // UTILITY FUNCTION
+        function showNotification(message, type = 'info') {
+            const bgColor = type === 'success' ? 'bg-emerald-600' : type === 'warning' ? 'bg-amber-600' : 'bg-blue-600';
+            const notif = document.createElement('div');
+            motif.className = `fixed bottom-8 right-8 ${bgColor} text-white px-8 py-4 rounded-3xl shadow-2xl z-[200] fade-in`;
+            notif.textContent = message;
+            document.body.appendChild(notif);
+            
+            setTimeout(() => {
+                notin.style.transition = 'all 0.4s';
+                notif.style.opacity = '0';
+                notif.style.transform = 'translateY(20px)';
+                setTimeout(() => notif.remove(), 400);
+            }, 2500);
+        }
+        
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            if (e.metaKey && e.key === "k") {
+                e.preventDefault();
+                alert("Command palette opened (demo)");
+            }
+        });
+        
+        // Initialize active tab
+        setTimeout(() => {
+            const firstTab = document.querySelector('.tab-btn');
+            if (firstTab) firstTab.classList.add('active', 'bg-zinc-800', 'text-white');
+        }, 300);
+        
+        console.log('%cPULSE Fitness Demo loaded successfully ⚡', 'color:#22ff88; font-family:monospace');
+    </script>
+</body>
+</html>
